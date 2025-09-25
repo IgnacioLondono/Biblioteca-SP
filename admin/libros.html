@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Libros - BiblioTech</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .admin-container { display: flex; min-height: 100vh; margin-top: 80px; }
+        .admin-sidebar { width: 250px; background: var(--primary-color); color: white; padding: 2rem 1rem; }
+        .admin-main { flex: 1; padding: 2rem; }
+        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2rem; }
+        .admin-table { width: 100%; border-collapse: collapse; background: white; border-radius: 10px; overflow: hidden; }
+        .admin-table th, .admin-table td { padding: 1rem; text-align: left; border-bottom: 1px solid #eee; }
+        .table-actions { display: flex; gap: 0.5rem; }
+        .btn-small { padding: 0.3rem 0.8rem; font-size: 0.8rem; }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-book-open"></i>
+                <span class="brand-name">BiblioTech Admin</span>
+            </div>
+            <div class="nav-actions">
+                <a href="../index.html" class="btn-secondary">Volver a la Tienda</a>
+                <button class="btn-auth" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Salir
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="admin-container">
+        <nav class="admin-sidebar">
+            <h2><i class="fas fa-cog"></i> Panel</h2>
+            <ul class="admin-menu">
+                <li><a href="index.html"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="libros.html" class="active"><i class="fas fa-book"></i> Gestión de Libros</a></li>
+                <li><a href="usuarios.html"><i class="fas fa-users"></i> Usuarios</a></li>
+                <li><a href="prestamos.html"><i class="fas fa-exchange-alt"></i> Préstamos</a></li>
+            </ul>
+        </nav>
+
+        <main class="admin-main">
+            <div class="admin-header">
+                <h1>Gestión de Libros</h1>
+                <button class="btn-primary" onclick="abrirModalLibro()">
+                    <i class="fas fa-plus"></i> Nuevo Libro
+                </button>
+            </div>
+
+            <div class="filters">
+                <input type="text" id="searchBooks" placeholder="Buscar libros..." style="padding: 0.5rem; width: 300px;">
+                <select id="filterStatus" style="padding: 0.5rem; margin-left: 1rem;">
+                    <option value="">Todos los estados</option>
+                    <option value="disponible">Disponible</option>
+                    <option value="prestado">Prestado</option>
+                </select>
+            </div>
+
+            <div class="table-container" style="margin-top: 2rem;">
+                <table class="admin-table">
+                    <thead>
+                        <tr>
+                            <th>Portada</th>
+                            <th>Título</th>
+                            <th>Autor</th>
+                            <th>Género</th>
+                            <th>Año</th>
+                            <th>Estado</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="librosTable">
+                        <!-- Datos dinámicos -->
+                    </tbody>
+                </table>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal para nuevo/editar libro -->
+    <div id="libroModal" style="display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); z-index: 1000;">
+        <div style="background: white; margin: 2rem auto; padding: 2rem; border-radius: 10px; max-width: 600px;">
+            <h2 id="modalTitle">Nuevo Libro</h2>
+            <form id="libroForm">
+                <input type="hidden" id="libroId">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modalTitulo">Título *</label>
+                        <input type="text" id="modalTitulo" required maxlength="100">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalAutor">Autor *</label>
+                        <input type="text" id="modalAutor" required maxlength="100">
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="modalGenero">Género *</label>
+                        <input type="text" id="modalGenero" required maxlength="50">
+                    </div>
+                    <div class="form-group">
+                        <label for="modalAnio">Año *</label>
+                        <input type="number" id="modalAnio" required min="1000" max="2024">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="modalDescripcion">Descripción</label>
+                    <textarea id="modalDescripcion" rows="3" maxlength="500"></textarea>
+                </div>
+                <div class="form-group">
+                    <label for="modalPortada">URL de Portada</label>
+                    <input type="url" id="modalPortada" placeholder="https://ejemplo.com/imagen.jpg">
+                </div>
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="cerrarModal()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Libro</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../js/admin-libros.js"></script>
+</body>
+</html>

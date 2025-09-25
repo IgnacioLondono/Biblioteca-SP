@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Perfil - BiblioTech</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .profile-container {
+            max-width: 1000px;
+            margin: 100px auto 2rem;
+            padding: 0 2rem;
+        }
+
+        .profile-header {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+            display: flex;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .profile-avatar {
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2.5rem;
+        }
+
+        .profile-info h1 {
+            margin-bottom: 0.5rem;
+            color: var(--text-dark);
+        }
+
+        .profile-stats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .stat-card i {
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .tabs {
+            display: flex;
+            border-bottom: 2px solid #eee;
+            margin-bottom: 2rem;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .tab.active {
+            border-bottom-color: var(--primary-color);
+            color: var(--primary-color);
+            font-weight: 600;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .prestamo-card {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 1rem;
+            display: flex;
+            gap: 1.5rem;
+            align-items: center;
+        }
+
+        .prestamo-cover {
+            width: 80px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+
+        .prestamo-info {
+            flex: 1;
+        }
+
+        .prestamo-status {
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .status-vencido { background: #fee2e2; color: #dc2626; }
+        .status-activo { background: #d1fae5; color: #065f46; }
+        .status-proximo { background: #fef3c7; color: #d97706; }
+
+        .btn-renew {
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+
+        .profile-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: flex-end;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-book-open"></i>
+                <span class="brand-name">BiblioTech</span>
+            </div>
+            
+            <ul class="nav-menu">
+                <li><a href="index.html">Inicio</a></li>
+                <li><a href="libros.html">Catálogo</a></li>
+                <li><a href="perfil.html" class="nav-link active">Mi Perfil</a></li>
+                <li><a href="contacto.html">Contacto</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="btn-auth" id="logoutBtn">
+                    <i class="fas fa-sign-out-alt"></i> Cerrar Sesión
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <div class="profile-container">
+        <!-- Header del Perfil -->
+        <div class="profile-header">
+            <div class="profile-avatar">
+                <i class="fas fa-user"></i>
+            </div>
+            <div class="profile-info">
+                <h1 id="userName">Cargando...</h1>
+                <p id="userEmail">usuario@ejemplo.com</p>
+                <p><strong>ID de Usuario:</strong> <span id="userId">#0000</span></p>
+                <p><strong>Miembro desde:</strong> <span id="memberSince">Enero 2024</span></p>
+            </div>
+        </div>
+
+        <!-- Estadísticas Rápidas -->
+        <div class="profile-stats">
+            <div class="stat-card">
+                <i class="fas fa-book"></i>
+                <h3 id="totalPrestamos">0</h3>
+                <p>Préstamos Activos</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-history"></i>
+                <h3 id="totalLeidos">0</h3>
+                <p>Libros Leídos</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-clock"></i>
+                <h3 id="proximosVencer">0</h3>
+                <p>Por Vencer</p>
+            </div>
+            <div class="stat-card">
+                <i class="fas fa-star"></i>
+                <h3 id="puntos">0</h3>
+                <p>Puntos Lectura</p>
+            </div>
+        </div>
+
+        <!-- Pestañas -->
+        <div class="tabs">
+            <div class="tab active" data-tab="prestamos">Mis Préstamos</div>
+            <div class="tab" data-tab="historial">Historial</div>
+            <div class="tab" data-tab="perfil">Información Personal</div>
+            <div class="tab" data-tab="configuracion">Configuración</div>
+        </div>
+
+        <!-- Contenido de Pestañas -->
+        <div class="tab-content active" id="prestamos-tab">
+            <h2>Mis Préstamos Activos</h2>
+            <div id="prestamosActivosList">
+                <!-- Lista de préstamos activos -->
+            </div>
+
+            <h2 style="margin-top: 2rem;">Préstamos por Vencer</h2>
+            <div id="prestamosProximosList">
+                <!-- Lista de préstamos próximos a vencer -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="historial-tab">
+            <h2>Historial de Lectura</h2>
+            <div id="historialPrestamos">
+                <!-- Historial completo -->
+            </div>
+        </div>
+
+        <div class="tab-content" id="perfil-tab">
+            <h2>Información Personal</h2>
+            <form class="profile-form" id="profileForm">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profileRUT">RUT</label>
+                        <input type="text" id="profileRUT" disabled>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileFechaNacimiento">Fecha de Nacimiento</label>
+                        <input type="date" id="profileFechaNacimiento">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profileNombre">Nombre *</label>
+                        <input type="text" id="profileNombre" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileApellidos">Apellidos *</label>
+                        <input type="text" id="profileApellidos" required>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="profileRegion">Región</label>
+                        <select id="profileRegion">
+                            <option value="">Selecciona una región</option>
+                            <option value="Metropolitana">Metropolitana</option>
+                            <option value="Valparaíso">Valparaíso</option>
+                            <option value="Biobío">Biobío</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label for="profileComuna">Comuna</label>
+                        <select id="profileComuna">
+                            <option value="">Selecciona una comuna</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="profileDireccion">Dirección *</label>
+                    <input type="text" id="profileDireccion" required>
+                </div>
+
+                <div class="form-actions">
+                    <button type="button" class="btn-secondary" onclick="perfil.cancelarEdicion()">Cancelar</button>
+                    <button type="submit" class="btn-primary">Guardar Cambios</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="tab-content" id="configuracion-tab">
+            <h2>Configuración de Cuenta</h2>
+            <div class="profile-form">
+                <div class="form-group">
+                    <label for="notificacionesEmail">Notificaciones por Email</label>
+                    <div>
+                        <input type="checkbox" id="notificacionesEmail" checked> 
+                        <label for="notificacionesEmail">Recibir recordatorios de vencimiento</label>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="limitePrestamos">Límite de Préstamos Simultáneos</label>
+                    <select id="limitePrestamos">
+                        <option value="3">3 libros</option>
+                        <option value="5" selected>5 libros</option>
+                        <option value="10">10 libros</option>
+                    </select>
+                </div>
+
+                <div class="form-actions">
+                    <button class="btn-primary" onclick="perfil.guardarConfiguracion()">Guardar Configuración</button>
+                </div>
+
+                <hr style="margin: 2rem 0;">
+
+                <div class="form-group">
+                    <h3 style="color: #e74c3c;">Zona de Peligro</h3>
+                    <button class="btn-secondary" style="background: #e74c3c; color: white;" onclick="perfil.eliminarCuenta()">
+                        <i class="fas fa-trash"></i> Eliminar Mi Cuenta
+                    </button>
+                    <p style="font-size: 0.9rem; color: #666; margin-top: 0.5rem;">
+                        Esta acción no se puede deshacer. Se perderán todos tus datos y historial.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2024 BiblioTech - Duoc UC. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/perfil.js"></script>
+</body>
+</html>

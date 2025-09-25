@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BiblioTech - Tu Biblioteca Digital</title>
+    <link rel="stylesheet" href="css/style.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="nav-brand">
+                <i class="fas fa-book-open"></i>
+                <span class="brand-name">BiblioTech</span>
+            </div>
+            
+<ul class="nav-menu">
+    <li><a href="index.html" class="nav-link">Inicio</a></li>
+    <li><a href="libros.html" class="nav-link">Catálogo</a></li>
+    <li><a href="perfil.html" class="nav-link">Mi Perfil</a></li>
+    <li><a href="contacto.html" class="nav-link">Contacto</a></li>
+</ul>
+
+            <div class="nav-actions">
+                <button class="btn-auth" id="loginBtn">
+                    <i class="fas fa-user"></i> Ingresar
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Descubre el Mundo de la Lectura</h1>
+            <p>Más de 10,000 libros digitales disponibles las 24 horas</p>
+            <a href="libros.html" class="btn-primary">Explorar Catálogo</a>
+        </div>
+        <div class="hero-image">
+            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Biblioteca">
+        </div>
+    </section>
+
+    <!-- Libros Destacados -->
+    <section class="featured-books">
+        <div class="container">
+            <h2>Libros Destacados</h2>
+            <div class="books-grid" id="featuredBooks">
+                <!-- Los libros se cargan con JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Estadísticas -->
+    <section class="stats">
+        <div class="container">
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <i class="fas fa-book"></i>
+                    <h3>10,000+</h3>
+                    <p>Libros Disponibles</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-users"></i>
+                    <h3>5,000+</h3>
+                    <p>Usuarios Activos</p>
+                </div>
+                <div class="stat-card">
+                    <i class="fas fa-download"></i>
+                    <h3>50,000+</h3>
+                    <p>Descargas Mensuales</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; 2024 BiblioTech - Duoc UC. Todos los derechos reservados.</p>
+    </footer>
+
+    <script src="js/main.js"></script>
+    <script src="js/biblioteca.js"></script>
+</body>
+</html>
