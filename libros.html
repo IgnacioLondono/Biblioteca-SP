@@ -44,6 +44,10 @@
                 <option value="Romance">Romance</option>
                 <option value="Clásico">Clásico</option>
             </select>
+            <!-- Botón para activar la búsqueda con el "robot" (llamadas HTTP, imágenes, previosTerms) -->
+            <button id="robotBtn" class="btn-secondary" style="margin-left: 1rem;">Robot</button>
+            <!-- Input invisible para seleccionar imágenes si se necesita enviar al robot -->
+            <input type="file" id="robotImages" accept="image/*" multiple style="display: none;">
         </div>
 
         <!-- Lista de Libros -->
@@ -58,5 +62,8 @@
 
     <script src="js/main.js"></script>
     <script src="js/biblioteca.js"></script>
+    <script src="js/robot-search-vanilla.js"></script>
+    <!-- Inicializador del módulo (usa ES modules) -->
+    <script type="module" src="js/robot-search-module-init.js"></script>
 </body>
 </html>
